@@ -1,5 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,6 +9,7 @@ import * as Yup from 'yup'
 // eslint-disable-next-line import-helpers/order-imports
 import Logo from '../../assets/novo-logo.svg'
 import Button from '../../components/Button'
+import { useUser } from '../../hooks/UserContext'
 import api from '../../services/api'
 import {
   Container,
@@ -17,9 +19,13 @@ import {
   Input,
   SigInLink,
   ErrorMessage
-} from './style'
+} from './styles'
 
 function Login() {
+  const { putUserData, userData } = useUser()
+
+  console.log(userData)
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Email inválido')
@@ -38,20 +44,20 @@ function Login() {
   })
 
   const onSubmit = async clientData => {
-    const response = await toast.promise(
-      api.post('session', {
+    const { data } = await toast.promise(
+      api.post('/session', {
         email: clientData.email,
         password: clientData.password
       }),
 
       {
-        pending: 'Verificando seus dados',
+        pending: 'Validando os dados',
         success: 'Seja bem vindo(a)',
-        error: 'Verifique seu email e senha'
+        error: 'Verifique email e a senha'
       }
     )
 
-    console.log(response)
+    putUserData(data)
   }
 
   return (
@@ -83,7 +89,10 @@ function Login() {
         </form>
 
         <SigInLink>
-          Não possui conta? <a> Cadastrar</a>
+          Não possui conta?{' '}
+          <Link style={{ color: 'white' }} to="/cadastro">
+            Cadastrar
+          </Link>
         </SigInLink>
       </ContainerItens>
     </Container>

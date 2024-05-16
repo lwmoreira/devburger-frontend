@@ -1,5 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
@@ -16,7 +18,7 @@ import {
   Input,
   SigInLink,
   ErrorMessage
-} from './style'
+} from './styles'
 
 function Register() {
   const schema = Yup.object().shape({
@@ -42,13 +44,27 @@ function Register() {
   })
 
   const onSubmit = async clientData => {
-    const response = await api.post('users', {
-      name: clientData.name,
-      email: clientData.email,
-      password: clientData.password
-    })
+    try {
+      const { status } = await api.post(
+        '/users',
+        {
+          name: clientData.name,
+          email: clientData.email,
+          password: clientData.password
+        },
+        { validateStatus: () => true }
+      )
 
-    console.log(response)
+      if (status === 201 || status === 200) {
+        toast.success('Usuário cadastrado com sucesso')
+      } else if (status === 409) {
+        toast.error('Email já cadastrado')
+      } else {
+        throw new Error()
+      }
+    } catch (err) {
+      toast.error('Falha no sistema! Tente novamente')
+    }
   }
 
   return (
@@ -98,7 +114,10 @@ function Register() {
           </Button>
         </form>
         <SigInLink style={{ marginBottom: 10 }}>
-          Já possui conta? <a>Entrar</a>
+          Já possui conta?{' '}
+          <Link style={{ color: 'white' }} to="/login">
+            Entrar
+          </Link>
         </SigInLink>
       </ContainerItens>
     </Container>
