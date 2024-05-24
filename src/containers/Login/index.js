@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-// eslint-disable-next-line import-helpers/order-imports
 import Logo from '../../assets/novo-logo.svg'
 import Button from '../../components/Button'
 import { useUser } from '../../hooks/UserContext'
@@ -23,9 +22,7 @@ import {
 
 function Login() {
   const navigate = useNavigate()
-  const { putUserData, userData } = useUser()
-
-  console.log(userData)
+  const { putUserData } = useUser()
 
   const schema = Yup.object().shape({
     email: Yup.string()
@@ -45,24 +42,26 @@ function Login() {
   })
 
   const onSubmit = async clientData => {
-    const { data } = await toast.promise(
-      api.post('/session', {
+    try {
+      const { data } = await api.post('/session', {
         email: clientData.email,
         password: clientData.password
-      }),
+      })
 
-      {
-        pending: 'Validando os dados',
-        success: 'Seja bem vindo(a)',
-        error: 'Verifique email e a senha'
+      putUserData(data)
+
+      toast.success('Seja bem vindo(a)')
+
+      setTimeout(() => {
+        navigate('/')
+      }, 1000)
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        toast.error('Email ou senha incorretos')
+      } else {
+        toast.error('Falha no sistema! Tente novamente')
       }
-    )
-
-    putUserData(data)
-
-    setTimeout(() => {
-      navigate('/')
-    }, 1000)
+    }
   }
 
   return (
