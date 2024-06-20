@@ -65,4 +65,13 @@ export const Button = styled.button`
   font-style: normal;
   font-weight: 700;
   line-height: 100%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
 `
