@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
@@ -15,38 +15,34 @@ import {
   ProductsContainer
 } from './styles'
 
-export function Products(props) {
-  console.log(props)
-  // const location = useLocation()
+function Products() {
+  const location = useLocation()
 
-  // let categoryId = 0
-  // if (location.state?.categoryId) {
-  //   categoryId = location.state.categoryId
-  // }
+  let categoryId = 0
+  if (location.state && location.state?.categoryId) {
+    categoryId = location.state.categoryId
+  }
 
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
   const [filteredProducts, setfilteredProducts] = useState([])
-  const [activeCategory, setactiveCategory] = useState(0)
+  const [activeCategory, setactiveCategory] = useState(categoryId)
 
   useEffect(() => {
     async function loadCategories() {
       const { data } = await api.get('/categories')
-
       const newCategories = [{ id: 0, name: 'Todas' }, ...data]
-
       setCategories(newCategories)
     }
 
     async function loadProducts() {
       const { data: allProducts } = await api.get('/products')
-
       const newProducts = allProducts.map(product => {
         return { ...product, formatedPrice: formatCurrency(product.price) }
       })
-
       setProducts(newProducts)
     }
+
     loadCategories()
     loadProducts()
   }, [])
@@ -58,7 +54,6 @@ export function Products(props) {
       const newfilteredProducts = products.filter(
         product => product.category_id === activeCategory
       )
-
       setfilteredProducts(newfilteredProducts)
     }
   }, [activeCategory, products])
@@ -94,3 +89,5 @@ export function Products(props) {
 Products.propTypes = {
   location: PropTypes.object
 }
+
+export default Products

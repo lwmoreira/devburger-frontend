@@ -1,7 +1,8 @@
 import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 
-import { Home, Login, Products, Register, Cart } from '../containers'
+import { Home, Login, Register, Cart } from '../containers'
+import Products from '../containers/Products' // Importação correta para o export default
 import PrivateRoute from './private-route'
 
 function MyRoutes() {

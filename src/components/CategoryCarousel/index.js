@@ -7,10 +7,10 @@ import { Container, CategoryImg, ContainerItens, Image, Button } from './styles'
 
 export function CategoryCarousel() {
   const [categories, setCategories] = useState([])
+
   useEffect(() => {
     async function loadCategories() {
       const { data } = await api.get('/categories')
-
       setCategories(data)
     }
     loadCategories()
@@ -36,12 +36,7 @@ export function CategoryCarousel() {
           categories.map(category => (
             <ContainerItens key={category.id}>
               <Image src={category.url} alt="foto da categoria" />
-              <Button
-                to={{
-                  pathname: '/produtos',
-                  state: { categoryId: category.id }
-                }}
-              >
+              <Button to="/produtos" state={{ categoryId: category.id }}>
                 {category.name}
               </Button>
             </ContainerItens>
