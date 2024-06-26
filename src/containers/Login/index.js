@@ -53,7 +53,9 @@ export function Login() {
       toast.success('Seja bem vindo(a)')
 
       setTimeout(() => {
-        navigate('/')
+        if (data.admin) {
+          navigate('/pedidos')
+        } else navigate('/')
       }, 1000)
     } catch (error) {
       if (error.response && error.response.status === 401) {

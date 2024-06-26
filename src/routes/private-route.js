@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { Header } from '../components/Header'
 
-function PrivateRoute({ element: Element, ...rest }) {
+function PrivateRoute({ element: Element, isAdmin, ...rest }) {
   const user = localStorage.getItem('devburger:userData')
 
   if (!user) {
@@ -14,7 +14,7 @@ function PrivateRoute({ element: Element, ...rest }) {
 
   return (
     <>
-      <Header />
+      {!isAdmin && <Header />}
       <Element {...rest} />
     </>
   )
@@ -22,7 +22,8 @@ function PrivateRoute({ element: Element, ...rest }) {
 
 PrivateRoute.propTypes = {
   element: PropTypes.oneOfType([PropTypes.func, PropTypes.elementType])
-    .isRequired
+    .isRequired,
+  isAdmin: PropTypes.bool.isRequired
 }
 
 export default PrivateRoute
