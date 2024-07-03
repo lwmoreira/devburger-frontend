@@ -1,8 +1,8 @@
 import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 
-import Admin from '../components/Admin'
-import { Home, Login, Register, Cart } from '../containers'
+import paths from '../constants/paths'
+import { Home, Login, Register, Cart, Admin } from '../containers'
 import Products from '../containers/Products'
 import PrivateRoute from './private-route'
 
@@ -16,12 +16,26 @@ function MyRoutes() {
           path="/"
           element={<PrivateRoute element={Home} isAdmin={false} />}
         />
-        <Route path="/produtos" element={<PrivateRoute element={Products} />} />
-        <Route path="/carrinho" element={<PrivateRoute element={Cart} />} />
         <Route
-          path="/pedidos"
+          path="/produtos"
+          element={<PrivateRoute element={Products} isAdmin={false} />}
+        />
+        <Route
+          path="/carrinho"
+          element={<PrivateRoute element={Cart} isAdmin={false} />}
+        />
+        <Route
+          path={paths.Order}
           element={<PrivateRoute element={Admin} isAdmin={true} />}
         />
+        <Route
+          path={paths.Products}
+          element={<PrivateRoute element={Admin} isAdmin={true} />}
+        />
+        {/* <Route
+          path={paths.NewProduct}
+          element={<PrivateRoute element={Admin} isAdmin={true} />}
+        /> */}
       </Routes>
     </Router>
   )

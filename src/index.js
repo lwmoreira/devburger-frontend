@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify' // incluir o Toast caso necessite
 
 import AppProvider from './hooks'
 import Routes from './routes/routes'
