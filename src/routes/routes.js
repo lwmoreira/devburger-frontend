@@ -32,10 +32,10 @@ function MyRoutes() {
           path={paths.Products}
           element={<PrivateRoute element={Admin} isAdmin={true} />}
         />
-        {/* <Route
+        <Route
           path={paths.NewProduct}
           element={<PrivateRoute element={Admin} isAdmin={true} />}
-        /> */}
+        />
       </Routes>
     </Router>
   )
