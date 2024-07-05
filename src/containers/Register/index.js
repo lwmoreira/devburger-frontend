@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 
 // eslint-disable-next-line import-helpers/order-imports
 import Logo from '../../assets/novo-logo.svg'
-import { Button } from '../../components'
+import { Button, ErrorMessage } from '../../components'
 import api from '../../services/api'
 import {
   Container,
@@ -16,8 +16,7 @@ import {
   ContainerItens,
   Label,
   Input,
-  SigInLink,
-  ErrorMessage
+  SigInLink
 } from './styles'
 
 export function Register() {

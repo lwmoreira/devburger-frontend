@@ -88,12 +88,3 @@ export const SigInLink = styled.p`
     text-decoration: underline;
   }
 `
-export const ErrorMessage = styled.p`
-  color: #ff8c00;
-  font-family: Roboto;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-top: 5px;
-`
