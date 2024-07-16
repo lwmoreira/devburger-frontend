@@ -36,6 +36,10 @@ function MyRoutes() {
           path={paths.NewProduct}
           element={<PrivateRoute element={Admin} isAdmin={true} />}
         />
+        <Route
+          path={paths.EditProduct}
+          element={<PrivateRoute element={Admin} isAdmin={true} />}
+        />
       </Routes>
     </Router>
   )

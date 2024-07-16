@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import CancelIcon from '@mui/icons-material/Cancel'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -15,7 +16,8 @@ import formatCurrency from '../../../utils/formatCurrency'
 import { Container, Img, EditIconStyles } from './styles'
 
 function ListProducts() {
-  const [products, setProducts] = useState()
+  const [products, setProducts] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function loadOrders() {
@@ -31,6 +33,10 @@ function ListProducts() {
       return <CheckCircleIcon style={{ color: '#228822' }} />
     }
     return <CancelIcon style={{ color: '#cc1717' }} />
+  }
+
+  const editProduct = product => {
+    navigate('/editar-produtos', { state: { product } })
   }
 
   return (
@@ -62,7 +68,7 @@ function ListProducts() {
                     <Img src={product.url} alt="imagem do produto" />
                   </TableCell>
                   <TableCell>
-                    <EditIconStyles />
+                    <EditIconStyles onClick={() => editProduct(product)} />
                   </TableCell>
                 </TableRow>
               ))}

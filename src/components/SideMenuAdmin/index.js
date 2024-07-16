@@ -21,7 +21,7 @@ export function SideMenuAdmin({ path }) {
       <hr />
       <ItemContainer
         style={{
-          position: 'absolute',
+          position: 'fixed',
           bottom: '30px'
         }}
       >
