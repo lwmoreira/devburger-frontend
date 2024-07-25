@@ -1,19 +1,18 @@
 import styled from 'styled-components'
 
-// import Background from '../../assets/background.svg'
-import RegisterImg from '../../assets/background-tela-register.jpg'
+import Background from '../../assets/backeground-tela-login-codeburger.svg'
 
 export const Container = styled.div`
   height: 100vh;
   width: 100vw;
-  background: url('${RegisterImg}');
+  background: url('${Background}');
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
 export const RegisterImage = styled.img`
-  height: 50%;
+  height: 70%;
 `
 
 export const ContainerItens = styled.div`
@@ -36,6 +35,9 @@ export const ContainerItens = styled.div`
     text-align: center;
     margin-top: 8px;
     margin-bottom: 9px;
+  }
+  img {
+    margin-bottom: 20px;
   }
 
   form {

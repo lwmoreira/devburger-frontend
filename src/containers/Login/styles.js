@@ -1,26 +1,25 @@
 import styled from 'styled-components'
 
-// import Background from '../../assets/background.svg'
-import LoginImg from '../../assets/background-tela-login.jpg'
+import Background from '../../assets/backeground-tela-login-codeburger.svg'
 
 export const Container = styled.div`
   height: 100vh;
   width: 100vw;
-  background: url('${LoginImg}');
+  background: url('${Background}');
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
 export const LoginImage = styled.img`
-  height: 50%;
+  height: 70%;
 `
 
 export const ContainerItens = styled.div`
   border-radius: 0 10px 10px 0;
   background: #373737de;
   height: 70%;
-  padding: 25px 90px;
+  padding: 25px 75px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,10 +40,9 @@ export const ContainerItens = styled.div`
     display: flex;
     flex-direction: column;
   }
-  /* img {
-    width: 383px;
-    height: 135px;
-  } */
+  img {
+    margin-bottom: 70px;
+  }
 `
 export const Label = styled.p`
   color: #fff;

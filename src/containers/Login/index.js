@@ -6,7 +6,8 @@ import { toast } from 'react-toastify'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-import Logo from '../../assets/novo-logo.svg'
+import LoginImg from '../../assets/img-login-codeburger.svg'
+import Logo from '../../assets/logo-codeburger.svg'
 import { Button, ErrorMessage } from '../../components'
 import { useUser } from '../../hooks/UserContext'
 import api from '../../services/api'
@@ -67,8 +68,9 @@ export function Login() {
 
   return (
     <Container>
-      <LoginImage src={Logo} alt="login-image" />
+      <LoginImage src={LoginImg} alt="Login-image" />
       <ContainerItens>
+        <img src={Logo} alt="logo-codeburger" />
         <h1>Login</h1>
 
         <form noValidate onSubmit={handleSubmit(onSubmit)}>

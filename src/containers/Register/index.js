@@ -6,7 +6,8 @@ import { toast } from 'react-toastify'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
-import Logo from '../../assets/novo-logo.svg'
+import RegisterImg from '../../assets/img-register-codeburger.svg'
+import Logo from '../../assets/logo-codeburger.svg'
 import { Button, ErrorMessage } from '../../components'
 import api from '../../services/api'
 import {
@@ -68,8 +69,9 @@ export function Register() {
 
   return (
     <Container>
-      <RegisterImage src={Logo} alt="register-image" />
+      <RegisterImage src={RegisterImg} alt="Login-image" />
       <ContainerItens>
+        <img src={Logo} alt="logo-codeburger" />
         <h1>Cadastre-se</h1>
 
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
