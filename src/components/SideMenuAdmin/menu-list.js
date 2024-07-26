@@ -25,7 +25,7 @@ const listLinks = [
   {
     id: 4,
     label: 'Criar Categoria',
-    link: paths.NewProduct,
+    link: paths.NewCategory,
     icon: LibraryAddIcon
   }
 ]

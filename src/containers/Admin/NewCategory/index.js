@@ -51,7 +51,7 @@ function NewCategory() {
     categoryDataFormData.append('category_id', data.category.id)
     categoryDataFormData.append('file', data.file[0])
 
-    await toast.promise(api.post('products', categoryDataFormData), {
+    await toast.promise(api.post('categories', categoryDataFormData), {
       pending: 'Criando nova Categoria...',
       success: {
         render: 'Categoria criada com sucesso',
@@ -70,12 +70,12 @@ function NewCategory() {
     })
 
     setTimeout(() => {
-      navigate('/listar-produtos')
+      navigate('/nova-categoria')
     }, 1000)
   }
   useEffect(() => {
     async function loadCategories() {
-      const { data } = await api.get('/categories')
+      const { data } = await api.post('/categories')
 
       setCategories(data)
     }
