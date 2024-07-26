@@ -13,7 +13,7 @@ import { Container, Label, Input, ButtonStyles, LabelUpload } from './styles'
 
 function NewCategory() {
   const [fileName, setFileName] = useState(null)
-  const [setCategories] = useState([])
+  const [categories, setCategories] = useState([])
   const navigate = useNavigate()
 
   const schema = Yup.object().shape({
