@@ -23,7 +23,7 @@ export function Admin() {
         {path === paths.Order && <Orders />}
         {path === paths.Products && <ListProducts />}
         {path === paths.NewProduct && <NewProduct />}
-        {path === paths.NewProduct && <NewCategory />}
+        {path === paths.NewCategory && <NewCategory />}
         {path === paths.EditProduct && <EditProduct />}
       </ContainerItems>
     </Container>
