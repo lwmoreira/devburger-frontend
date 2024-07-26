@@ -45,13 +45,13 @@ function NewCategory() {
   })
 
   const onSubmit = async data => {
-    const productDataFormData = new FormData()
+    const categoryDataFormData = new FormData()
 
-    productDataFormData.append('name', data.name)
-    productDataFormData.append('category_id', data.category.id)
-    productDataFormData.append('file', data.file[0])
+    categoryDataFormData.append('name', data.name)
+    categoryDataFormData.append('category_id', data.category.id)
+    categoryDataFormData.append('file', data.file[0])
 
-    await toast.promise(api.post('products', productDataFormData), {
+    await toast.promise(api.post('products', categoryDataFormData), {
       pending: 'Criando nova Categoria...',
       success: {
         render: 'Categoria criada com sucesso',
