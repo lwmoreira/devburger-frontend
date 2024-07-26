@@ -21,6 +21,12 @@ const listLinks = [
     label: 'Adicionar Produtos',
     link: paths.NewProduct,
     icon: LibraryAddIcon
+  },
+  {
+    id: 4,
+    label: 'Criar Categoria',
+    link: paths.NewProduct,
+    icon: LibraryAddIcon
   }
 ]
 

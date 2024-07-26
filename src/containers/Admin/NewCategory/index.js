@@ -18,8 +18,7 @@ function NewCategory() {
 
   const schema = Yup.object().shape({
     name: Yup.string().required('Digite o nome do produto'),
-    price: Yup.number().typeError('Digite o valor do produto'),
-    category: Yup.object().required('Escolha uma categoria'),
+
     file: Yup.mixed()
       .test('required', 'Carregue um arquivo', value => {
         return value?.length > 0
