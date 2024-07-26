@@ -41,7 +41,7 @@ export const ContainerItens = styled.div`
     flex-direction: column;
   }
   img {
-    margin-bottom: 70px;
+    margin-bottom: 17px;
   }
 `
 export const Label = styled.p`

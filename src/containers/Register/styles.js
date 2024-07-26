@@ -12,13 +12,13 @@ export const Container = styled.div`
 `
 
 export const RegisterImage = styled.img`
-  height: 70%;
+  height: 85%;
 `
 
 export const ContainerItens = styled.div`
   border-radius: 0 10px 10px 0;
   background: #373737de;
-  height: 70%;
+  height: 85%;
   padding: 25px 90px;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ export const ContainerItens = styled.div`
     margin-bottom: 9px;
   }
   img {
-    margin-bottom: 20px;
+    margin-bottom: 6px;
   }
 
   form {
