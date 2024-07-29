@@ -14,7 +14,6 @@ import { Container, Label, Input, ButtonStyles, LabelUpload } from './styles'
 function NewCategory() {
   const [fileName, setFileName] = useState(null)
   const [categories, setCategories] = useState([])
-  const [isFormVisible, setIsFormVisible] = useState(false)
   const navigate = useNavigate()
 
   const schema = Yup.object().shape({
@@ -79,55 +78,49 @@ function NewCategory() {
 
   return (
     <Container>
-      <ButtonStyles onClick={() => setIsFormVisible(!isFormVisible)}>
-        {isFormVisible ? 'Fechar Formulário' : 'Criar Nova Categoria'}
-      </ButtonStyles>
+      <form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <Label>Nome</Label>
+          <Input type="text" {...register('name')} />
+          <ErrorMessage>{errors.name?.message}</ErrorMessage>
+        </div>
 
-      {isFormVisible && (
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <Label>Nome</Label>
-            <Input type="text" {...register('name')} />
-            <ErrorMessage>{errors.name?.message}</ErrorMessage>
-          </div>
+        <div>
+          <Label>Categoria Pai (opcional)</Label>
+          <select {...register('category')}>
+            <option value="">Selecione uma categoria (opcional)</option>
+            {categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <ErrorMessage>{errors.category?.message}</ErrorMessage>
+        </div>
 
-          <div>
-            <Label>Categoria Pai (opcional)</Label>
-            <select {...register('category')}>
-              <option value="">Selecione uma categoria (opcional)</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            <ErrorMessage>{errors.category?.message}</ErrorMessage>
-          </div>
+        <div>
+          <LabelUpload>
+            {fileName || (
+              <>
+                <UploadFileIcon />
+                Carregar Imagem
+              </>
+            )}
 
-          <div>
-            <LabelUpload>
-              {fileName || (
-                <>
-                  <UploadFileIcon />
-                  Carregar Imagem
-                </>
-              )}
+            <input
+              type="file"
+              accept="image/png, image/jpg, image/svg"
+              {...register('file')}
+              onChange={value => {
+                setFileName(value.target.files[0]?.name)
+              }}
+            />
+          </LabelUpload>
+          <ErrorMessage>{errors.file?.message}</ErrorMessage>
+        </div>
 
-              <input
-                type="file"
-                accept="image/png, image/jpg, image/svg"
-                {...register('file')}
-                onChange={value => {
-                  setFileName(value.target.files[0]?.name)
-                }}
-              />
-            </LabelUpload>
-            <ErrorMessage>{errors.file?.message}</ErrorMessage>
-          </div>
-
-          <ButtonStyles type="submit">Criar Categoria</ButtonStyles>
-        </form>
-      )}
+        <ButtonStyles type="submit">Criar Categoria</ButtonStyles>
+      </form>
     </Container>
   )
 }
