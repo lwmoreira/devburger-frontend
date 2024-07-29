@@ -15,6 +15,7 @@ function NewCategory() {
   const [fileName, setFileName] = useState(null)
   const navigate = useNavigate()
 
+  // Schema de validação com Yup
   const schema = Yup.object().shape({
     name: Yup.string().required('Digite o nome da categoria'),
     file: Yup.mixed()
@@ -44,18 +45,37 @@ function NewCategory() {
   const onSubmit = async data => {
     const categoryDataFormData = new FormData()
 
+    // Adiciona os dados da categoria ao FormData
     categoryDataFormData.append('name', data.name)
     categoryDataFormData.append('file', data.file[0])
 
-    await toast.promise(api.post('categories', categoryDataFormData), {
-      pending: 'Criando nova Categoria...',
-      success: 'Categoria criada com sucesso',
-      error: 'Ocorreu um erro ao tentar criar a categoria'
-    })
+    try {
+      // Envia a requisição POST para criar uma nova categoria
+      await toast.promise(
+        api.post('/categories', categoryDataFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data' // Cabeçalho para envio de arquivos
+          }
+        }),
+        {
+          pending: 'Criando nova Categoria...',
+          success: 'Categoria criada com sucesso',
+          error: 'Ocorreu um erro ao tentar criar a categoria'
+        }
+      )
 
-    setTimeout(() => {
-      navigate('/listar-produtos')
-    }, 2000)
+      // Redireciona para a página de listar produtos após a criação
+      setTimeout(() => {
+        navigate('/listar-produtos')
+      }, 2000)
+    } catch (error) {
+      // Tratamento de erro
+      console.error(
+        'Erro ao criar categoria:',
+        error.response?.data || error.message
+      )
+      toast.error('Ocorreu um erro ao tentar criar a categoria')
+    }
   }
 
   return (
@@ -78,7 +98,7 @@ function NewCategory() {
 
             <input
               type="file"
-              accept="image/png, image/jpg, image/svg"
+              accept="image/png, image/jpg, image/svg+xml" // Aceita tipos de arquivos especificados
               {...register('file')}
               onChange={value => {
                 setFileName(value.target.files[0]?.name)
