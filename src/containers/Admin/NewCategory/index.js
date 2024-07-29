@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -13,7 +13,6 @@ import { Container, Label, Input, ButtonStyles, LabelUpload } from './styles'
 
 function NewCategory() {
   const [fileName, setFileName] = useState(null)
-  const [categories, setCategories] = useState([])
   const navigate = useNavigate()
 
   const schema = Yup.object().shape({
@@ -31,8 +30,7 @@ function NewCategory() {
       })
       .test('fileSize', 'Carregue o arquivo até 2mb', value => {
         return value && value[0]?.size <= 200000
-      }),
-    category: Yup.string().notRequired()
+      })
   })
 
   const {
@@ -47,9 +45,6 @@ function NewCategory() {
     const categoryDataFormData = new FormData()
 
     categoryDataFormData.append('name', data.name)
-    if (data.category) {
-      categoryDataFormData.append('category_id', data.category)
-    }
     categoryDataFormData.append('file', data.file[0])
 
     await toast.promise(api.post('categories', categoryDataFormData), {
@@ -63,19 +58,6 @@ function NewCategory() {
     }, 2000)
   }
 
-  useEffect(() => {
-    async function loadCategories() {
-      try {
-        const { data } = await api.get('/categories')
-        setCategories(data)
-      } catch (error) {
-        toast.error('Erro ao carregar categorias')
-      }
-    }
-
-    loadCategories()
-  }, [])
-
   return (
     <Container>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -83,19 +65,6 @@ function NewCategory() {
           <Label>Nome</Label>
           <Input type="text" {...register('name')} />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
-        </div>
-
-        <div>
-          <Label>Categoria Pai (opcional)</Label>
-          <select {...register('category')}>
-            <option value="">Selecione uma categoria (opcional)</option>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-          <ErrorMessage>{errors.category?.message}</ErrorMessage>
         </div>
 
         <div>
