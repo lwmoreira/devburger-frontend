@@ -14,11 +14,11 @@ import { Container, Label, Input, ButtonStyles, LabelUpload } from './styles'
 function NewCategory() {
   const [fileName, setFileName] = useState(null)
   const [categories, setCategories] = useState([])
+  const [isFormVisible, setIsFormVisible] = useState(false)
   const navigate = useNavigate()
 
   const schema = Yup.object().shape({
-    name: Yup.string().required('Digite o nome do produto'),
-
+    name: Yup.string().required('Digite o nome da categoria'),
     file: Yup.mixed()
       .test('required', 'Carregue um arquivo', value => {
         return value?.length > 0
@@ -32,13 +32,13 @@ function NewCategory() {
       })
       .test('fileSize', 'Carregue o arquivo até 2mb', value => {
         return value && value[0]?.size <= 200000
-      })
+      }),
+    category: Yup.string().notRequired()
   })
 
   const {
     register,
     handleSubmit,
-
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema)
@@ -48,36 +48,30 @@ function NewCategory() {
     const categoryDataFormData = new FormData()
 
     categoryDataFormData.append('name', data.name)
-    categoryDataFormData.append('category_id', data.category.id)
+    if (data.category) {
+      categoryDataFormData.append('category_id', data.category)
+    }
     categoryDataFormData.append('file', data.file[0])
 
     await toast.promise(api.post('categories', categoryDataFormData), {
       pending: 'Criando nova Categoria...',
-      success: {
-        render: 'Categoria criada com sucesso',
-        style: {
-          backgroundColor: 'green',
-          color: 'white'
-        }
-      },
-      error: {
-        render: 'Ocorreu um erro ao tentar criar a categoria',
-        style: {
-          backgroundColor: 'red',
-          color: 'white'
-        }
-      }
+      success: 'Categoria criada com sucesso',
+      error: 'Ocorreu um erro ao tentar criar a categoria'
     })
 
     setTimeout(() => {
-      navigate('/nova-categoria')
-    }, 1000)
+      navigate('/listar-produtos')
+    }, 2000)
   }
+
   useEffect(() => {
     async function loadCategories() {
-      const { data } = await api.post('/categories')
-
-      setCategories(data)
+      try {
+        const { data } = await api.get('/categories')
+        setCategories(data)
+      } catch (error) {
+        toast.error('Erro ao carregar categorias')
+      }
     }
 
     loadCategories()
@@ -85,39 +79,55 @@ function NewCategory() {
 
   return (
     <Container>
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <Label>Nome</Label>
-          <Input type="text" {...register('name')} />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
-        </div>
+      <ButtonStyles onClick={() => setIsFormVisible(!isFormVisible)}>
+        {isFormVisible ? 'Fechar Formulário' : 'Criar Nova Categoria'}
+      </ButtonStyles>
 
-        <div>
-          <LabelUpload>
-            {fileName || (
-              <>
-                <UploadFileIcon />
-                Carregar Imagem
-              </>
-            )}
+      {isFormVisible && (
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <Label>Nome</Label>
+            <Input type="text" {...register('name')} />
+            <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          </div>
 
-            <input
-              type="file"
-              accept="image/png, image/jpg, image/svg"
-              {...register('file')}
-              onChange={value => {
-                setFileName(value.target.files[0]?.name)
-              }}
-            />
-          </LabelUpload>
-          <ErrorMessage>{errors.file?.message}</ErrorMessage>
-        </div>
-        <div>
-          <ErrorMessage>{errors.category?.message}</ErrorMessage>
-        </div>
+          <div>
+            <Label>Categoria Pai (opcional)</Label>
+            <select {...register('category')}>
+              <option value="">Selecione uma categoria (opcional)</option>
+              {categories.map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <ErrorMessage>{errors.category?.message}</ErrorMessage>
+          </div>
 
-        <ButtonStyles type="submit">Criar Categoria</ButtonStyles>
-      </form>
+          <div>
+            <LabelUpload>
+              {fileName || (
+                <>
+                  <UploadFileIcon />
+                  Carregar Imagem
+                </>
+              )}
+
+              <input
+                type="file"
+                accept="image/png, image/jpg, image/svg"
+                {...register('file')}
+                onChange={value => {
+                  setFileName(value.target.files[0]?.name)
+                }}
+              />
+            </LabelUpload>
+            <ErrorMessage>{errors.file?.message}</ErrorMessage>
+          </div>
+
+          <ButtonStyles type="submit">Criar Categoria</ButtonStyles>
+        </form>
+      )}
     </Container>
   )
 }
