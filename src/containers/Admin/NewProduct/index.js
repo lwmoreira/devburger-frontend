@@ -57,7 +57,7 @@ function NewProduct() {
     productDataFormData.append('price', data.price)
     productDataFormData.append('category_id', data.category.id) // Corrigido para `category_id`
     productDataFormData.append('file', data.file[0])
-
+    console.log(productDataFormData)
     // Enviando os dados para o backend e lidando com mensagens de sucesso e erro
     await toast.promise(api.post('products', productDataFormData), {
       pending: 'Criando novo produto...',
