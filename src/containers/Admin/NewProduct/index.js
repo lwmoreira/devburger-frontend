@@ -17,7 +17,6 @@ function NewProduct() {
   const [categories, setCategories] = useState([])
   const navigate = useNavigate()
 
-  // Definindo o esquema de validação
   const schema = Yup.object().shape({
     name: Yup.string().required('Digite o nome do produto'),
     price: Yup.number()
@@ -25,12 +24,13 @@ function NewProduct() {
       .typeError('Digite um valor numérico'),
     category: Yup.object().required('Escolha uma categoria'),
     file: Yup.mixed()
-      .required('Carregue um arquivo') // Adicionando `required` para garantir que o arquivo seja enviado
+      .required('Carregue um arquivo')
       .test('type', 'Tipos de arquivos válidos JPEG, PNG ou SVG', value => {
         return (
           value[0]?.type === 'image/jpeg' ||
+          value[0]?.type === 'image/jpg' ||
           value[0]?.type === 'image/png' ||
-          value[0]?.type === 'image/svg+xml'
+          value[0]?.type === 'image/svg'
         )
       })
       .test('fileSize', 'Carregue o arquivo até 2mb', value => {
@@ -38,7 +38,6 @@ function NewProduct() {
       })
   })
 
-  // Configurando o formulário com react-hook-form
   const {
     register,
     handleSubmit,
@@ -48,48 +47,52 @@ function NewProduct() {
     resolver: yupResolver(schema)
   })
 
-  // Função para lidar com o envio do formulário
   const onSubmit = async data => {
     const productDataFormData = new FormData()
 
-    // Adicionando dados ao FormData
     productDataFormData.append('name', data.name)
     productDataFormData.append('price', data.price)
-    productDataFormData.append('category_id', data.category.id) // Corrigido para `category_id`
+    productDataFormData.append('category_id', data.category.id)
     productDataFormData.append('file', data.file[0])
-    console.log(productDataFormData)
-    // Enviando os dados para o backend e lidando com mensagens de sucesso e erro
-    await toast.promise(api.post('products', productDataFormData), {
-      pending: 'Criando novo produto...',
-      success: {
-        render: 'Produto criado com sucesso',
-        style: {
-          backgroundColor: 'green',
-          color: 'white'
+    productDataFormData.append('offer', false)
+
+    await toast.promise(
+      api.post('products', productDataFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-      },
-      error: {
-        render: 'Ocorreu um erro ao tentar criar o produto',
-        style: {
-          backgroundColor: 'red',
-          color: 'white'
+      }),
+      {
+        pending: 'Criando novo produto...',
+        success: {
+          render: 'Produto criado com sucesso',
+          style: {
+            backgroundColor: 'green',
+            color: 'white'
+          }
+        },
+        error: {
+          render: 'Ocorreu um erro ao tentar criar o produto',
+          style: {
+            backgroundColor: 'red',
+            color: 'white'
+          }
         }
       }
-    })
+    )
 
     setTimeout(() => {
-      navigate('/listar-produtos') // Redirecionando após o sucesso
+      navigate('/listar-produtos')
     }, 1000)
   }
 
-  // Carregando categorias do backend
   useEffect(() => {
     async function loadCategories() {
       try {
         const { data } = await api.get('/categories')
         setCategories(data)
       } catch (error) {
-        console.error('Failed to load categories', error) // Adicionando tratamento de erro
+        console.error('Failed to load categories', error)
       }
     }
 
@@ -117,10 +120,9 @@ function NewProduct() {
                 Carregar Imagem
               </>
             )}
-
             <input
               type="file"
-              accept="image/png, image/jpeg, image/svg+xml" // Corrigido para incluir `image/jpeg`
+              accept="image/png, image/jpeg, image/jpg, image/svg"
               {...register('file')}
               onChange={value => {
                 setFileName(value.target.files[0]?.name)
@@ -139,14 +141,13 @@ function NewProduct() {
                 options={categories}
                 getOptionLabel={cat => cat.name}
                 getOptionValue={cat => cat.id}
-                placeholder="Categorias"
+                placeholder="Escolha a categoria"
               />
             )}
           />
           <ErrorMessage>{errors.category?.message}</ErrorMessage>
         </div>
-        <ButtonStyles type="submit">Adicionar Produto</ButtonStyles>{' '}
-        {/* Corrigido para "Adicionar Produto" */}
+        <ButtonStyles type="submit">Adicionar Produto</ButtonStyles>
       </form>
     </Container>
   )

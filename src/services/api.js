@@ -2,7 +2,8 @@ import axios from 'axios'
 
 // Configura a URL base da API
 const apiDevBurger = axios.create({
-  baseURL: 'https://devburger-backend-production.up.railway.app/',
+  baseURL: 'http://localhost:3001/',
+  // baseURL: 'https://devburger-backend-production.up.railway.app/',
   headers: {
     'Content-Type': 'application/json' // Define o tipo de conteúdo como JSON
   }
