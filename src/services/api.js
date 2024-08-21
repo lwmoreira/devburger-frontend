@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-// Configura a URL base da API
 const apiDevBurger = axios.create({
   baseURL: 'https://devburger-backend-production.up.railway.app/',
   headers: {
