@@ -12,7 +12,10 @@ export function CardProduct({ product }) {
   const navigate = useNavigate()
   return (
     <Container>
-      <Image src={product.url} alt="imagem do produto" />
+      <Image
+        src={`https://devburger-backend-production.up.railway.app/${product.path}`}
+        alt={`imagem do produto ${product.name}`}
+      />
       <div>
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{product.formatedPrice}</ProductPrice>

@@ -11,6 +11,7 @@ export function CategoryCarousel() {
   useEffect(() => {
     async function loadCategories() {
       const { data } = await api.get('/categories')
+      console.log('Categories data:', data) // Log para verificação
       setCategories(data)
     }
     loadCategories()
@@ -35,7 +36,10 @@ export function CategoryCarousel() {
         {categories &&
           categories.map(category => (
             <ContainerItens key={category.id}>
-              <Image src={category.url} alt="foto da categoria" />
+              <Image
+                src={`https://devburger-backend-production.up.railway.app/${category.path}`}
+                alt={`foto da categoria ${category.name}`}
+              />
               <Button to="/produtos" state={{ categoryId: category.id }}>
                 {category.name}
               </Button>

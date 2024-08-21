@@ -25,16 +25,20 @@ function NewProduct() {
     category: Yup.object().required('Escolha uma categoria'),
     file: Yup.mixed()
       .required('Carregue um arquivo')
-      .test('type', 'Tipos de arquivos válidos JPEG, PNG ou SVG', value => {
-        return (
-          value[0]?.type === 'image/jpeg' ||
-          value[0]?.type === 'image/jpg' ||
-          value[0]?.type === 'image/png' ||
-          value[0]?.type === 'image/svg'
-        )
-      })
+      .test(
+        'type',
+        'Tipos de arquivos válidos JPG, JPEG, PNG ou SVG',
+        value => {
+          return (
+            value[0]?.type === 'image/jpeg' ||
+            value[0]?.type === 'image/jpg' ||
+            value[0]?.type === 'image/png' ||
+            value[0]?.type === 'image/svg'
+          )
+        }
+      )
       .test('fileSize', 'Carregue o arquivo até 2mb', value => {
-        return value && value[0]?.size <= 200000
+        return value && value[0]?.size <= 2000000
       })
   })
 
@@ -56,34 +60,26 @@ function NewProduct() {
     productDataFormData.append('file', data.file[0])
     productDataFormData.append('offer', false)
 
-    await toast.promise(
-      api.post('products', productDataFormData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }),
-      {
-        pending: 'Criando novo produto...',
-        success: {
-          render: 'Produto criado com sucesso',
-          style: {
-            backgroundColor: 'green',
-            color: 'white'
+    try {
+      await toast.promise(
+        api.post('products', productDataFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        },
-        error: {
-          render: 'Ocorreu um erro ao tentar criar o produto',
-          style: {
-            backgroundColor: 'red',
-            color: 'white'
-          }
+        }),
+        {
+          pending: 'Criando novo produto...',
+          success: 'Produto criado com sucesso',
+          error: 'Ocorreu um erro ao tentar criar o produto'
         }
-      }
-    )
+      )
 
-    setTimeout(() => {
-      navigate('/listar-produtos')
-    }, 1000)
+      setTimeout(() => {
+        navigate('/listar-produtos')
+      }, 1000)
+    } catch (error) {
+      console.error('Erro ao criar produto:', error)
+    }
   }
 
   useEffect(() => {
@@ -93,6 +89,7 @@ function NewProduct() {
         setCategories(data)
       } catch (error) {
         console.error('Failed to load categories', error)
+        toast.error('Erro ao carregar categorias')
       }
     }
 

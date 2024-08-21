@@ -15,22 +15,25 @@ function NewCategory() {
   const [fileName, setFileName] = useState(null)
   const navigate = useNavigate()
 
-  // Schema de validação com Yup
+  // Definindo o esquema de validação com Yup
   const schema = Yup.object().shape({
     name: Yup.string().required('Digite o nome da categoria'),
     file: Yup.mixed()
-      .test('required', 'Carregue um arquivo', value => {
-        return value?.length > 0
-      })
-      .test('type', 'Tipos de arquivos válidos JPEG, PNG ou SVG', value => {
-        return (
-          value[0]?.type === 'image/jpeg' ||
-          value[0]?.type === 'image/png' ||
-          value[0]?.type === 'image/svg+xml'
-        )
-      })
-      .test('fileSize', 'Carregue o arquivo até 2mb', value => {
-        return value && value[0]?.size <= 200000
+      .required('Carregue um arquivo')
+      .test(
+        'type',
+        'Tipos de arquivos válidos são JPG, JPEG, PNG ou SVG',
+        value => {
+          return (
+            value[0]?.type === 'image/jpeg' ||
+            value[0]?.type === 'image/jpg' ||
+            value[0]?.type === 'image/png' ||
+            value[0]?.type === 'image/svg'
+          )
+        }
+      )
+      .test('fileSize', 'Carregue um arquivo até 2mb', value => {
+        return value && value[0]?.size <= 2000000
       })
   })
 
@@ -42,19 +45,18 @@ function NewCategory() {
     resolver: yupResolver(schema)
   })
 
+  // Função para submeter o formulário
   const onSubmit = async data => {
     const categoryDataFormData = new FormData()
 
-    // Adiciona os dados da categoria ao FormData
     categoryDataFormData.append('name', data.name)
     categoryDataFormData.append('file', data.file[0])
 
     try {
-      // Envia a requisição POST para criar uma nova categoria
       await toast.promise(
         api.post('/categories', categoryDataFormData, {
           headers: {
-            'Content-Type': 'multipart/form-data' // Cabeçalho para envio de arquivos
+            'Content-Type': 'multipart/form-data'
           }
         }),
         {
@@ -64,16 +66,11 @@ function NewCategory() {
         }
       )
 
-      // Redireciona para a página de listar produtos após a criação
       setTimeout(() => {
         navigate('/listar-produtos')
-      }, 2000)
+      }, 1000)
     } catch (error) {
-      // Tratamento de erro
-      console.error(
-        'Erro ao criar categoria:',
-        error.response?.data || error.message
-      )
+      console.error('Erro ao criar categoria:', error)
       toast.error('Ocorreu um erro ao tentar criar a categoria')
     }
   }
@@ -98,10 +95,10 @@ function NewCategory() {
 
             <input
               type="file"
-              accept="image/png, image/jpg, image/svg+xml" // Aceita tipos de arquivos especificados
+              accept="image/png, image/jpg, image/jpeg, image/svg"
               {...register('file')}
-              onChange={value => {
-                setFileName(value.target.files[0]?.name)
+              onChange={event => {
+                setFileName(event.target.files[0]?.name)
               }}
             />
           </LabelUpload>

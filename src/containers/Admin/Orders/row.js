@@ -94,8 +94,8 @@ function Row({ row, setOrders, orders }) {
                       <TableCell>{productRow.category}</TableCell>
                       <TableCell>
                         <ProductsImg
-                          src={productRow.url}
-                          alt="imagem-do-produto"
+                          src={`https://devburger-backend-production.up.railway.app/product-file/${productRow.path}`}
+                          alt={`imagem do produto ${productRow.name}`}
                         />
                       </TableCell>
                     </TableRow>
@@ -123,7 +123,8 @@ Row.propTypes = {
         quantity: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
-        url: PropTypes.string
+        url: PropTypes.string,
+        path: PropTypes.string.isRequired
       })
     ).isRequired
   }).isRequired

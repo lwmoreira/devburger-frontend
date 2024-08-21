@@ -19,7 +19,10 @@ export function CartItens() {
       {cartProducts && cartProducts.length > 0 ? (
         cartProducts.map(product => (
           <Body key={product.id}>
-            <img src={product.url} />
+            <img
+              src={`https://devburger-backend-production.up.railway.app/${product.path}`}
+              alt={`imagem do produto ${product.name}`}
+            />
             <p>{product.name}</p>
             <p>{formatCurrency(product.price)}</p>
             <div className="quantity-container">

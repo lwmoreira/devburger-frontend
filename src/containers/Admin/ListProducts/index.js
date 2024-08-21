@@ -20,12 +20,15 @@ function ListProducts() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    async function loadOrders() {
-      const { data } = await api.get('/products')
-
-      setProducts(data)
+    async function loadProducts() {
+      try {
+        const { data } = await api.get('/products')
+        setProducts(data)
+      } catch (error) {
+        console.error('Falha ao carregar produtos', error)
+      }
     }
-    loadOrders()
+    loadProducts()
   }, [])
 
   function isOffer(offerStatus) {
@@ -47,7 +50,7 @@ function ListProducts() {
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Preço</TableCell>
-              <TableCell align="center">Produdo em Oferta</TableCell>
+              <TableCell align="center">Produto em Oferta</TableCell>
               <TableCell align="center">Imagem do Produto</TableCell>
               <TableCell>Editar</TableCell>
             </TableRow>
@@ -65,7 +68,10 @@ function ListProducts() {
                   <TableCell>{formatCurrency(product.price)}</TableCell>
                   <TableCell align="center">{isOffer(product.offer)}</TableCell>
                   <TableCell align="center">
-                    <Img src={product.url} alt="imagem do produto" />
+                    <Img
+                      src={`https://devburger-backend-production.up.railway.app/${product.path}`}
+                      alt={`imagem do produto ${product.name}`}
+                    />
                   </TableCell>
                   <TableCell>
                     <EditIconStyles onClick={() => editProduct(product)} />

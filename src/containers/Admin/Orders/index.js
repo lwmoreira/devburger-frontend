@@ -19,7 +19,6 @@ function Orders() {
   const [filteredOrders, setFilteredOrders] = useState([])
   const [activeStatus, setActiveStatus] = useState(1)
   const [rows, setRows] = useState([])
-  console.log(orders)
 
   useEffect(() => {
     async function loadOrders() {
