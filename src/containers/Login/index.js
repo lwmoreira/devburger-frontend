@@ -54,7 +54,7 @@ export function Login() {
 
       setTimeout(() => {
         if (data.admin) {
-          navigate('/pedidos')
+          navigate('/')
         } else navigate('/')
       }, 1000)
     } catch (error) {
