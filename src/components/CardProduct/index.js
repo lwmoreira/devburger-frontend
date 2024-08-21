@@ -13,7 +13,7 @@ export function CardProduct({ product }) {
   return (
     <Container>
       <Image
-        src={`https://devburger-backend-production.up.railway.app/${product.path}`}
+        src={`https://devburger-backend-production.up.railway.app/product-file/${product.path}`}
         alt={`imagem do produto ${product.name}`}
       />
       <div>
