@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiDevBurger = axios.create({
-  baseURL: 'https://devburger-backend-production.up.railway.app/',
+  baseURL: 'REACT_APP_BACKEND_URL',
   headers: {
     'Content-Type': 'application/json'
   }

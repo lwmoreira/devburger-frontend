@@ -94,7 +94,7 @@ function Row({ row, setOrders, orders }) {
                       <TableCell>{productRow.category}</TableCell>
                       <TableCell>
                         <ProductsImg
-                          src={`https://devburger-backend-production.up.railway.app/product-file/${productRow.path}`}
+                          src={`${process.env.REACT_APP_BACKEND_URL}product-file/${productRow.path}`}
                           alt={`imagem do produto ${productRow.name}`}
                         />
                       </TableCell>

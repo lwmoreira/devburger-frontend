@@ -48,7 +48,7 @@ export function OffersCarousel() {
           offers.map(products => (
             <ContainerItens key={products.id}>
               <Image
-                src={`https://devburger-backend-production.up.railway.app/product-file/${products.path}`}
+                src={`${process.env.REACT_APP_BACKEND_URL}product-file/burger-backend-production.up.railway.app/product-file/${products.path}`}
                 alt={`imagem do produto ${products.name}`}
               />
               <p>{products.name}</p>

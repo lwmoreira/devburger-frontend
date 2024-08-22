@@ -13,7 +13,7 @@ export function CardProduct({ product }) {
   return (
     <Container>
       <Image
-        src={`https://devburger-backend-production.up.railway.app/product-file/${product.path}`}
+        src={`${process.env.REACT_APP_BACKEND_URL}product-file/${product.path}`}
         alt={`imagem do produto ${product.name}`}
       />
       <div>

@@ -20,7 +20,7 @@ export function CartItens() {
         cartProducts.map(product => (
           <Body key={product.id}>
             <img
-              src={`https://devburger-backend-production.up.railway.app/${product.path}`}
+              src={`${process.env.REACT_APP_BACKEND_URL}product-file/${product.path}`}
               alt={`imagem do produto ${product.name}`}
             />
             <p>{product.name}</p>

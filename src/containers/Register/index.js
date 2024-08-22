@@ -20,18 +20,17 @@ import {
 } from './styles'
 
 export function Register() {
-  // Correção das mensagens de erro e valores mínimos de caracteres
   const schema = Yup.object().shape({
-    name: Yup.string().required('O nome é obrigatório'), // Mensagem de erro correta para nome obrigatório
+    name: Yup.string().required('O nome é obrigatório'),
     email: Yup.string()
       .email('Digite um e-mail válido')
-      .required('O e-mail é obrigatório'), // Mensagem de erro correta para email
+      .required('O e-mail é obrigatório'),
     password: Yup.string()
       .required('A senha é obrigatória')
-      .min(6, 'A senha deve conter no mínimo 6 caracteres'), // Corrigido para 6 caracteres
+      .min(6, 'A senha deve conter no mínimo 6 caracteres'),
     confirmPassword: Yup.string()
       .required('A confirmação de senha é obrigatória')
-      .oneOf([Yup.ref('password')], 'As senhas devem ser iguais') // Mensagem de erro correta para confirmação de senha
+      .oneOf([Yup.ref('password')], 'As senhas devem ser iguais')
   })
 
   const {
@@ -44,7 +43,6 @@ export function Register() {
 
   const onSubmit = async clientData => {
     try {
-      // Envia a requisição para criar um novo usuário
       const { status } = await api.post(
         '/users',
         {
