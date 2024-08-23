@@ -22,7 +22,7 @@ export function SideMenuAdmin({ path }) {
       <ItemContainer
         style={{
           position: 'absolute',
-          bottom: '10px'
+          bottom: '-20px'
         }}
       >
         <LogoutIcon style={{ color: '#ffffff' }} />
