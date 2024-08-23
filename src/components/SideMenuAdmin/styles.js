@@ -10,7 +10,7 @@ export const Container = styled.div`
   left: 0;
 
   hr {
-    margin: 100px 15px;
+    margin: 50px 15px;
   }
 `
 
