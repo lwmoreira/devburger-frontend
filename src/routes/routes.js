@@ -14,7 +14,7 @@ function MyRoutes() {
         <Route path="/cadastro" element={<Register />} />
         <Route
           path="/"
-          element={<PrivateRoute element={Home} isAdmin={true} />}
+          element={<PrivateRoute element={Home} isAdmin={false} />}
         />
         <Route
           path="/produtos"
