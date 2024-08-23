@@ -40,7 +40,7 @@ export function Header() {
           onClick={() => navigate('/pedidos')}
           isActive={pathname === '/pedidos'}
         >
-          Ver Pedidos
+          Ver Pedidos/Menu Admin
         </PageLink>
       </ContainerLeft>
 
