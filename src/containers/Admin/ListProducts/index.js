@@ -69,7 +69,7 @@ function ListProducts() {
                   <TableCell align="center">{isOffer(product.offer)}</TableCell>
                   <TableCell align="center">
                     <Img
-                      src={`${process.env.REACT_APP_BACKEND_URL}product-file/${product.path}`}
+                      src={`$https://devburger-backend-production-8436.up.railway.app/product-file/${product.path}`}
                       alt={`imagem do produto ${product.name}`}
                     />
                   </TableCell>
