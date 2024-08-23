@@ -43,7 +43,7 @@ export function Login() {
 
   const onSubmit = async clientData => {
     try {
-      const { data } = await api.post('/session', {
+      const { data } = await api.post('session', {
         email: clientData.email,
         password: clientData.password
       })
