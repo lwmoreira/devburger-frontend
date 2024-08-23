@@ -54,8 +54,8 @@ export function Login() {
 
       setTimeout(() => {
         if (data.admin) {
-          navigate('/login')
-        } else navigate('/')
+          navigate('/')
+        } else navigate('/login')
       }, 1000)
     } catch (error) {
       if (error.response && error.response.status === 401) {
