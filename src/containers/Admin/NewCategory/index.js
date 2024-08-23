@@ -15,7 +15,6 @@ function NewCategory() {
   const [fileName, setFileName] = useState(null)
   const navigate = useNavigate()
 
-  // Definindo o esquema de validação com Yup
   const schema = Yup.object().shape({
     name: Yup.string().required('Digite o nome da categoria'),
     file: Yup.mixed()
@@ -45,7 +44,6 @@ function NewCategory() {
     resolver: yupResolver(schema)
   })
 
-  // Função para submeter o formulário
   const onSubmit = async data => {
     const categoryDataFormData = new FormData()
 
