@@ -22,7 +22,7 @@ function MyRoutes() {
         />
         <Route
           path="/carrinho"
-          element={<PrivateRoute element={Cart} isAdmin={false} />}
+          element={<PrivateRoute element={Cart} isAdmin={true} />}
         />
         <Route
           path={paths.Order}
