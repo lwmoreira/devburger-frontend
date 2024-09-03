@@ -12,6 +12,7 @@ export function CartResume() {
   const [finalPrice, setFinalPrice] = useState(0)
   const [deliveryTax] = useState(5)
   const navigate = useNavigate()
+  const { pathname } = location
 
   const { cartProducts } = useCart()
 
@@ -53,6 +54,7 @@ export function CartResume() {
         style={{ width: '100%', marginTop: 30 }}
         onClick={(() => navigate('/'), submitOrder)}
       >
+        {pathname === '/'}
         Finalizar Pedido
       </Button>
     </div>
