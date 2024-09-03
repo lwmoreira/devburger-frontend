@@ -44,9 +44,12 @@ export function Header() {
         </PageLink>
         <Line></Line>
         <PageLink>
-          onClick={() => navigate('/pedidos')}
           isActive={pathname === '/pedidos'}
-          <img src={Person} alt="logo-pessoa" />
+          <img
+            src={Person}
+            alt="logo-pessoa"
+            onClick={() => navigate('/pedidos')}
+          />
         </PageLink>
 
         <ContainerText>
