@@ -44,7 +44,7 @@ export function Header() {
         </PageLink>
         <Line></Line>
         <PageLink>
-          isActive={pathname === '/pedidos'}
+          {pathname === '/pedidos'}
           <img
             src={Person}
             alt="logo-pessoa"
