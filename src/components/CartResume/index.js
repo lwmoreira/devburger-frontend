@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useCart } from '../../hooks/CartContext'
@@ -11,7 +10,6 @@ import { Container } from './styles'
 export function CartResume() {
   const [finalPrice, setFinalPrice] = useState(0)
   const [deliveryTax] = useState(5)
-  const navigate = useNavigate()
 
   const { cartProducts } = useCart()
 
@@ -49,10 +47,7 @@ export function CartResume() {
           <p>{formatCurrency(finalPrice + deliveryTax)}</p>
         </div>
       </Container>
-      <Button
-        style={{ width: '100%', marginTop: 30 }}
-        onClick={() => navigate('/')(submitOrder)}
-      >
+      <Button style={{ width: '100%', marginTop: 30 }} onClick={submitOrder}>
         Finalizar Pedido
       </Button>
     </div>
